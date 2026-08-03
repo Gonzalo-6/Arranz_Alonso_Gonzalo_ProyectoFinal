@@ -51,4 +51,30 @@
   primera en una columna apelotonado y la segunda bien colocado cada uno en su celda. Lo he
   solucionado poniendo sep=";" a la hora de leer dim_conductor. A medida que he ido mostrando 
   tabla a tabla, he tenído que corregir con el sep=";" en linea, vehiculo e incidencia.
+  
+- He comenzado a ver los datos que me ofrecen las primeras consultas que he realizado y durante 
+  la revisión inicial detecté un error introducido durante la edición del archivo CSV. 
+  Al aplicar una operación sobre toda la columna en Excel se generaron filas vacías adicionales.
+  Se recuperó el archivo original y se corrigió la modificación aplicándola únicamente sobre las 
+  filas con datos.
+  En la tabla dim_parada en la columna de accesibilidad silla es true o false, pero si me sale
+  como que el dato es objet, no boolean.
+  En la tabla dim_tarifa al comprobar los datos en el excel salian bien, al mostrarlos con python
+  el precio me salia como dividido entre 10, al comprobarlos en el execel me ha salido bien, lo he
+  vuelto a cargar y me salia desordenado, he puesto sep=";" y ya ha salido todo perfecto.
+  En la tabla dim_vehículo la última columna de en_servicio debería de ser un boolean y lo 
+  contempla como un string.
+  en fact_indicidencias y fact_viajes la columna de fecha es un string en lugar de date, pero considero 
+  necesario las columnas de mes y año en fact_viajes de cara al análisis en Power BI, ya que en 
+  Pandas si se puede estraer esas columnas pero BI no.
+  Hay otras dos columnas, retirad y vehiculo_sustitucion, que deberian ser boolean y son string.
+  En las dos fact que quedan estas correctas, hasta el punto de que los booleans están bien, me 
+  llama la atención que las columnas que estan correctas pone true/false y las que pone string
+  pone verdadero/falso. Se tendrá en cuenta durante la fase de limpieza para convertir la columna
+  al tipo booleano.
+  Tras revisar todas las tablas se observa que no existen valores nulos. Esto indica una buena calidad 
+  inicial de los datos y evita tener que aplicar técnicas de imputación o eliminación de registros 
+  durante la fase de limpieza.
+  Las dimensiones son acordes a datos de las tablas.
 
+  Con esto popnemos fin a la exploración inicial.
