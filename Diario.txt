@@ -1,0 +1,54 @@
+1/08/2026
+
+-Comenzamos el proyecto leyendo el enunciado del ejercicio y me realizo un pequeño esquema
+ que muestra como dividimos la empresa partes importantes como el cocheras, trabajadores, nº 
+ de vehiculos y trabajadores.
+
+-Continuo con los archivos csv descargandolos para poder trabajar con ellos.
+
+--------------------------------------
+
+2/08/2026
+
+- Voy a cambiar el nombre del archivo que no lo he puesto como el profesor quiere.
+
+- He estado revisando los datos y en una primera exploración me he encontrado que las 
+  las distancias de las rutas en fact_viajes y dim_línea están con un 0 de más. He procedido
+  a dividirlo por 10 y de esa manera es dato ya es real.
+
+  Por otro lado, el autobus con matrícula 6016 BUS tiene un km de -500 cuando por la fecha de 
+  matriculación tendria que tener más de 500000 kms esto en la tabla de dim_vehículo.
+
+  En la tabla dim_parada hay una parada que tiene el dato de latitud.
+
+  En la tabla dim_conductor, en los años de antiguedad también había que dividirla entre 10. 
+  Y al hacerlo se ha rellenado un campo de un conductor que no tenia una antiedad superior al año.
+  Por otro lado, en esta misma tabla entiendo que los conductores que están dados de baja
+  todavía no se les ha contado los días ya que uno está a 0.
+
+  Me llama mucho la atención de como los id no cconcuerdan para nada con las fechas. En las tablas
+  fact_viajes, fact_mantenimiento y fact_indicidencias, no sigen una línea temporal.
+
+  En la tabla fact_indicidencias la columna de duracion_resolucion_min no tiene sentido, 
+  ya que debería de en días ya que un autobus con un accidente critico que te gastas más de
+  1000000, exagera en mi punto de vista, tardes 5 minutos. De hecho, este campo lo voy a cambiar
+  a días.
+
+3/08/2026
+
+- He comenzado comprobando que los cambios realizados estan correctamente guardados.
+
+- Voy a comenzar con la estructura recomendada y con la fase 1.
+
+- En la fase 1 he realizado una escturctura para ir complementandola poco a poco con las partes
+  que considero que son las mejores para mostrar los datos que tenemos y así poder analizarlos 
+  de la mejor manera posible.
+  
+  He comenzado cargando los datos. Una vez cargados he comenzado a ver los primeros parametros 
+  que me pueden dar las tablas usando el head, shape e info y en la tabla de dim_conductor se
+  se puede apreciar que tabla no esta separada por comas y si por punto y coma. Esto hace que 
+  a la hora de mostrarlo por pantalla no quedara igual que la siguiente tabla dim_depot. La 
+  primera en una columna apelotonado y la segunda bien colocado cada uno en su celda. Lo he
+  solucionado poniendo sep=";" a la hora de leer dim_conductor. A medida que he ido mostrando 
+  tabla a tabla, he tenído que corregir con el sep=";" en linea, vehiculo e incidencia.
+
