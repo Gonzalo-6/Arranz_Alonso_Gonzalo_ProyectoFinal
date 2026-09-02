@@ -78,3 +78,23 @@
   Las dimensiones son acordes a datos de las tablas.
 
   Con esto popnemos fin a la exploración inicial.
+
+5/08/2026
+
+- Comenzamos en la sesión para realizar la parte de la calidad del dato. En este caso y ya habiendo hecho la 
+  primera exploración que hice e incluso cambiando varios datos.
+  He estado meditando comenzar de 0 ya que viendo los apuntes de clase, información encontrado por google o
+  consultando a la IA, he tomado la decisión de volver al data set original y utilizar el EDA para lo que es,
+  buscar todos los errores o anomalias que pueden tener los datos y luego en la etapa de limpieza hacer lo que 
+  yo había comenzado a hacer al ver el data set y buscar evidencias de porque los datos no son correctos y más 
+  teniendo en cuenta que el profesor nos había avisado de que había errores intencionados en los datos.
+
+
+7/08/2026
+
+-Estamos con la calidad del dato y buscando que representan a la hora de tener el data set completo.
+
+2/09/2026
+Evalue la situacion al principio después de como empece y modficar las tablas en excel, se desajuntaron todas las tablas.
+Acto seguido comence a realizar el ejercicio y todos los valores me salian mal. Después de volverme loco y buscar información
+consulte a la ia y decidi comenzar de 0 con las tablas y el ejercicio.
