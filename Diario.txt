@@ -95,6 +95,14 @@
 -Estamos con la calidad del dato y buscando que representan a la hora de tener el data set completo.
 
 2/09/2026
-Evalue la situacion al principio después de como empece y modficar las tablas en excel, se desajuntaron todas las tablas.
-Acto seguido comence a realizar el ejercicio y todos los valores me salian mal. Después de volverme loco y buscar información
-consulte a la ia y decidi comenzar de 0 con las tablas y el ejercicio.
+-Evalue la situacion al principio después de como empece y modficar las tablas en excel, se desajuntaron todas las tablas.
+ Acto seguido comence a realizar el ejercicio y todos los valores me salian mal. Después de volverme loco y buscar información
+ consulte a la ia y decidi comenzar de 0 con las tablas y el ejercicio.
+
+
+3/09/2026
+
+-He creado las la base de datos y todas las tablas de forma correcta. Con sus PK y FK.
+ el paso siguientes es cargar las los datos desde los csv, he buscado la ruta correcta y subi los archivos en dicha carpeta.
+ Pero, se me presenta un problema a la hora de cargar dim_parada ya que hay en las columnas latitud y accesible_silla hay un valor null y eso 
+ hace que al cargar dicha fila de error.
