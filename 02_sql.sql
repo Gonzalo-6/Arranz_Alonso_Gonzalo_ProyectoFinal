@@ -208,3 +208,218 @@ precio_eur,
 SET 
 es_abono = (@es_abono = 'VERDADERO'),
 bonificado = (@bonificado = 'VERDADERO');
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/dim_conductor.csv'
+INTO TABLE dim_conductor
+FIELDS TERMINATED BY ','
+IGNORE 1 LINES
+(
+conductor_id,
+nombre,
+@anno_incorporacion,
+@antiguedad_anos,
+turno_habitual,
+depot_id,
+formacion,
+licencia_tipo,
+@activo,
+@ausencias_2024
+)
+SET
+anno_incorporacion = NULLIF(@anno_incorporacion, ''),
+antiguedad_anos = NULLIF(@antiguedad_anos, ''),
+activo = IF(@activo = 'True', 1, 0),
+ausencias_2024 = NULLIF(@ausencias_2024, '');
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/dim_parada.csv'
+INTO TABLE dim_parada
+FIELDS TERMINATED BY ','
+IGNORE 1 LINES
+(
+parada_id,
+nombre_parada,
+barrio,
+tipo,
+latitud,
+longitud,
+@accesible_silla,
+@marquesina,
+@panel_informacion,
+@activa
+)
+SET 
+accesible_silla = IF(@accesible_silla = 'True', 1, 0),
+marquesina = IF(@marquesina = 'True', 1, 0),
+panel_informacion = IF(@panel_informacion = 'True', 1, 0),
+activa = IF(@activa = 'True', 1, 0);
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/dim_parada.csv'
+INTO TABLE dim_parada
+FIELDS TERMINATED BY ','
+IGNORE 1 LINES
+(
+parada_id,
+nombre_parada,
+barrio,
+tipo,
+@latitud,
+@longitud,
+@accesible_silla,
+@marquesina,
+@panel_informacion,
+@activa
+)
+SET
+latitud = NULLIF(@latitud, ''),
+longitud = NULLIF(@longitud, ''),
+
+accesible_silla = IF(@accesible_silla = 'True', 1, 0),
+marquesina = IF(@marquesina = 'True', 1, 0),
+panel_informacion = IF(@panel_informacion = 'True', 1, 0),
+activa = IF(@activa = 'True', 1, 0);
+
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/dim_vehiculo.csv'
+INTO TABLE dim_vehiculo
+FIELDS TERMINATED BY ','
+IGNORE 1 LINES
+(
+vehiculo_id,
+matricula,
+modelo,
+@combustible,
+@capacidad_sentados,
+@capacidad_total,
+@anno_fabricacion,
+@anno_incorporacion,
+@km_totales,
+depot_id,
+@emisiones_co2_gkm,
+@en_servicio
+)
+SET
+combustible = NULLIF(@combustible, ''),
+
+capacidad_sentados = NULLIF(@capacidad_sentados, ''),
+capacidad_total = NULLIF(@capacidad_total, ''),
+anno_fabricacion = NULLIF(@anno_fabricacion, ''),
+anno_incorporacion = NULLIF(@anno_incorporacion, ''),
+km_totales = NULLIF(@km_totales, ''),
+emisiones_co2_gkm = NULLIF(@emisiones_co2_gkm, ''),
+
+en_servicio = IF(@en_servicio = 'True', 1, 0);
+
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fact_viajes.csv'
+INTO TABLE fact_viajes
+FIELDS TERMINATED BY ','
+IGNORE 1 LINES
+(
+    viaje_id,
+    linea_id,
+    vehiculo_id,
+    conductor_id,
+    parada_origen_id,
+    parada_destino_id,
+    @fecha,
+    anno,
+    mes,
+    dia_semana,
+    @es_festivo,
+    franja_horaria,
+    @hora_salida_prog,
+    @hora_salida_real,
+    @hora_llegada_real,
+    retraso_salida_min,
+    duracion_real_min,
+    @pasajeros_subidos,
+    ocupacion_pct,
+    km_programados,
+    km_recorridos,
+    @viaje_completado,
+    @consumo,
+    tarifa_predominante_id
+)
+SET
+-- Fechas
+fecha = STR_TO_DATE(@fecha, '%Y-%m-%d'),
+
+-- Horas
+hora_salida_prog = STR_TO_DATE(@hora_salida_prog, '%H:%i:%s'),
+hora_salida_real = STR_TO_DATE(@hora_salida_real, '%H:%i:%s'),
+hora_llegada_real = STR_TO_DATE(@hora_llegada_real, '%H:%i:%s'),
+
+-- Booleanos
+es_festivo = IF(@es_festivo = 'True', 1, 0),
+viaje_completado = IF(@viaje_completado = 'True', 1, 0),
+
+-- Nulos en enteros
+pasajeros_subidos = NULLIF(@pasajeros_subidos, ''),
+
+-- Nulos en float
+consumo = NULLIF(@consumo, '');
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fact_incidencias.csv'
+INTO TABLE fact_incidencias
+FIELDS TERMINATED BY ','
+IGNORE 1 LINES
+(
+    incidencia_id,
+    viaje_id,
+    vehiculo_id,
+    conductor_id,
+    linea_id,
+    @fecha,
+    anno,
+    mes,
+    @hora_incidencia,
+    tipo_incidencia,
+    categoria,
+    severidad,
+    @requiere_retirada,
+    duracion_resolucion_min,
+    @vehiculo_sustituto,
+    coste_estimado_eur
+)
+SET
+-- Fecha
+fecha = STR_TO_DATE(@fecha, '%Y-%m-%d'),
+
+-- Hora
+hora_incidencia = STR_TO_DATE(@hora_incidencia, '%H:%i:%s'),
+
+-- Booleanos
+requiere_retirada = IF(@requiere_retirada = 'True', 1, 0),
+vehiculo_sustituto = IF(@vehiculo_sustituto = 'True', 1, 0);
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/fact_mantenimiento.csv'
+INTO TABLE fact_mantenimiento
+FIELDS TERMINATED BY ','
+IGNORE 1 LINES
+(
+    mantenimiento_id,
+    vehiculo_id,
+    depot_id,
+    @fecha_entrada,
+    @fecha_salida,
+    anno,
+    mes,
+    tipo_mantenimiento,
+    @categoria,
+    @es_correctivo,
+    dias_fuera_servicio,
+    km_en_revision,
+    coste_eur,
+    proveedor,
+    garantia_meses
+)
+SET
+-- Fechas
+fecha_entrada = STR_TO_DATE(@fecha_entrada, '%Y-%m-%d'),
+fecha_salida  = STR_TO_DATE(@fecha_salida, '%Y-%m-%d'),
+
+-- Boolean
+es_correctivo = IF(@es_correctivo = 'True', 1, 0),
+
+-- Nulos en categoria
+categoria = NULLIF(@categoria, '');
