@@ -106,3 +106,10 @@
  el paso siguientes es cargar las los datos desde los csv, he buscado la ruta correcta y subi los archivos en dicha carpeta.
  Pero, se me presenta un problema a la hora de cargar dim_parada ya que hay en las columnas latitud y accesible_silla hay un valor null y eso 
  hace que al cargar dicha fila de error.
+
+
+
+
+ 12/09/2026
+ -He realizado la parte del gobierno del dato, me ha surgido dudas de como crear las tablas y de sobre todo como mostrar los
+  los KPIs que he elegido para poder mostrarlos e<en este documento que luego se veran en el paso siguiente.
