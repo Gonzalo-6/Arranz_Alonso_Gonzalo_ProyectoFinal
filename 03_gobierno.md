@@ -156,36 +156,19 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 ## Data Quality Log
 
 | Tabla              | Campo                | Problema               | Frecuencia | Decisión tomada                          | Justificación |
-|--------------------|----------------------|------------------------|------------|------------------------------------------|--------------|
+|--------------------|----------------------|------------------------|------------|------------------------------------------|---------------|
 | dim_linea          | separador CSV        | Uso de ";"             | 100%       | Cambio a separador coma                  | Incompatibilidad con LOAD DATA |
 | dim_parada         | latitud              | Valores nulos          | 1 fila     | Convertido a NULL                        | Error de origen |
 | dim_parada         | accesible_silla      | Tipo incorrecto        | 100%       | Convertido a BOOLEAN (0/1)               | Venía como texto |
 | dim_conductor      | antiguedad_anos      | Valor vacío            | 1 fila     | Convertido a NULL                        | Dato faltante |
 | dim_vehiculo       | combustible          | Valor nulo             | varias     | Permitido NULL                           | No crítico |
-| fact_viajes        | pasajeros_subidos    | Valores nulos          | X filas    | Convertido a NULL                        | No imputado |
-| fact_viajes        | consumo              | Valores nulos          | X filas    | Convertido a NULL                        | Evitar sesgo |
-| fact_mantenimiento | categoria            | Valores nulos          | X filas    | Convertido a NULL                        | No obligatorio |
+| fact_viajes        | pasajeros_subidos    | Valores nulos          | 40 filas   | Convertido a NULL                        | No imputado |
+| fact_viajes        | consumo              | Valores nulos          | 1065 filas | Convertido a NULL                        | Evitar sesgo |
+| fact_mantenimiento | categoria            | Valores nulos          | 15 filas   | Convertido a NULL                        | No obligatorio |
 | fact_mantenimiento | es_correctivo        | Texto en lugar de bool | 100%       | Convertido a 0/1                         | Normalización |
-
-
-
-
-
 
 
 
@@ -193,13 +176,13 @@
 
 ## KPIs
 
-| KPI                       | Fórmula                                 | Fuente                        | Exclusiones              | Responsable |
-|---------------------------|-----------------------------------------|-------------------------------|--------------------------|-------------|
-| Tasa de viajes completados| SUM(viaje_completado) / COUNT(*)        | fact_viajes.viajes_completados|  -                       | Operaciones |
-| Ocupación media           | AVG(ocupacion_pct)                      | fact_viajes                   | viajes incompletos       | Operaciones |
-| Consumo medio             | AVG(consumo)                            | fact_viajes                   | consumo NULL             | Operaciones |
-| Retraso medio             | AVG(retraso_salida_min)                 | fact_viajes                   | -                        | Operaciones |
-| Coste total mantenimiento | SUM(coste_eur)                          | fact_mantenimiento            | -                        | Finanzas    |
-| Coste medio incidencia    | AVG(coste_estimado_eur)                 | fact_incidencias              | coste = 0                | Mantenimiento |
-| Duración media incidencia | AVG(duracion_resolucion_min)            | fact_incidencias              | -                        | Mantenimiento |
-| Km medios por viaje       | AVG(km_recorridos)                      | fact_viajes                   | -                        | Operaciones |
+| KPI                       | Descripción                                                                                                  |Fórmula                                 | Fuente                        | Exclusiones              | Responsable |
+|---------------------------|--------------------------------------------------------------------------------------------------------------|-----------------------------------------|-------------------------------|--------------------------|-------------|
+| Tasa de viajes completados| Porcentaje de viajes que se finalizan correctamente respecto al total de viajes realizados                    |SUM(viaje_completado) / COUNT(*)                     | fact_viajes.viaje_completado |  -                       | Operaciones |
+| Ocupación media           | Nivel medio de ocupación de los vehículos en los viajes, indicando el grado de aprovechamiento de la capacidad|AVG(ocupacion_pct)                      | fact_viajes                   | viajes completados = 1    | Operaciones |
+| Consumo medio             | Consumo medio de los vehículos por viaje, utilizado como indicador de eficiencia operativa                     |AVG(consumo)                            | fact_viajes                   | consumo IS NOT NULL      | Operaciones |
+| Retraso medio             | Promedio de minutos de retraso en la salida de los viajes respecto a la hora programada                        |AVG(retraso_salida_min)                 | fact_viajes                   | -                        | Operaciones |
+| Coste total mantenimiento | Coste total acumulado de las operaciones de mantenimiento realizadas sobre los vehículos                       |SUM(coste_eur)                          | fact_mantenimiento            | -                        | Finanzas    |
+| Coste medio incidencia    | Coste promedio asociado a la resolución de incidencias registradas en la operativa                             |AVG(coste_estimado_eur)                 | fact_incidencias              |coste_estimado_eur > 0    | Mantenimiento |
+| Duración media incidencia | Tiempo medio necesario para resolver incidencias, medido en minutos                                            |AVG(duracion_resolucion_min)            | fact_incidencias              | -                        | Mantenimiento |
+| Km medios por viaje       | Distancia media recorrida por viaje, utilizada para analizar la eficiencia y planificación de rutas            | AVG(km_recorridos)                      | fact_viajes                   | -                        | Operaciones |
