@@ -110,6 +110,11 @@
 
 
 
- 12/09/2026
- -He realizado la parte del gobierno del dato, me ha surgido dudas de como crear las tablas y de sobre todo como mostrar los
-  los KPIs que he elegido para poder mostrarlos e<en este documento que luego se veran en el paso siguiente.
+12/09/2026
+-He realizado la parte del gobierno del dato, me ha surgido dudas de como crear las tablas y de sobre todo como mostrar los
+ los KPIs que he elegido para poder mostrarlos e<en este documento que luego se veran en el paso siguiente.
+
+
+21/09/2026
+-He comenzado con la parte de PowerBI y viendo las tablas y las columnas, veo como el nombre de algunas columnas no cuadran y esto crea la posibilidad de que 
+ a la hora mostrar los KPIs y las gráficas queden dudas sobre la veracidad de los datos, sobre me centro duracion_resolucion_min.
